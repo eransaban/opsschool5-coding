@@ -36,7 +36,8 @@ def chktempurature(cities):
         except:
             temperature = data["success"]
             badcity = print("This is wrong, There's no city with name",i,"\nplease try again cities like madrid, dublin, london")
-            return badcity
+            print(badcity)
+            continue
         end = print("temperature in ", city, " is ", temperature, ecotype)
     return(end)
 
