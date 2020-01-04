@@ -1,13 +1,16 @@
 from requests import get
-import json
 import sys
 
+readcode = open("key.txt", "r")
+key = readcode.read()
 tmptype = ""
 ecotype = ""
 endarg = -1
+cities = ""
 
-def main(*arg):
+def chktempurature(cities):
     global endarg
+    global key
 
     if sys.argv[-1] == "-f":
         tmptype = "f"
@@ -23,10 +26,10 @@ def main(*arg):
         tmptype = "m"
         ecotype = "celcius"
 
-    for i in (sys.argv[1:endarg]):
+    for i in cities:
 
         city = i
-        weather = get("http://api.weatherstack.com/current?access_key=a33b28c484453f67ce8fe059d25b0fa4&query="+city+"&units="+tmptype)
+        weather = get("http://api.weatherstack.com/current?access_key="+key+"&query="+city+"&units="+tmptype)
         data = weather.json()
         try:
             temp = data["current"]["temperature"]
@@ -36,6 +39,17 @@ def main(*arg):
             return badcity
         end = print("temperature in ", city, " is ", temp, ecotype)
     return(end)
+
+def main(*arg):
+    global cities
+    if len(sys.argv[-1]) > 2:
+        arglist = str(sys.argv[1:])
+    else:
+        len(sys.argv[-1]) < 2
+        arglist = str(sys.argv[1:-1])
+
+    cities = arglist.replace(",", " ").replace("'", " ").strip("'[] ").split()
+    chktempurature(cities)
 
 
 if __name__ == '__main__':
