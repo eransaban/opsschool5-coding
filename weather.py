@@ -32,12 +32,12 @@ def chktempurature(cities):
         weather = get("http://api.weatherstack.com/current?access_key="+key+"&query="+city+"&units="+tmptype)
         data = weather.json()
         try:
-            temp = data["current"]["temperature"]
+            temperature = data["current"]["temperature"]
         except:
-            temp = data["success"]
+            temperature = data["success"]
             badcity = print("This is wrong, There's no city with name",i,"\nplease try again cities like madrid, dublin, london")
             return badcity
-        end = print("temperature in ", city, " is ", temp, ecotype)
+        end = print("temperature in ", city, " is ", temperature, ecotype)
     return(end)
 
 def main(*arg):
